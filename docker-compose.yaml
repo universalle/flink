@@ -1,0 +1,37 @@
+version: "3"
+services:
+  jobmanager:
+    image: flink:latest
+    expose:
+      - "6123"
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+#      - EVENT_HUB_TELEMETRY_ENDPOINT=Endpoint=sb://cnh-bdgs-namespace.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=yJmQ4/3L9n58crTYQdZnElEbHMTYmXKf03mzHI7SvwA=;EntityPath=cnh-bdgs-dev
+  taskmanager_1:
+    image: flink:latest
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    links:
+      - "jobmanager:jobmanager"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
+  taskmanager_2:
+    image: flink:latest
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    links:
+      - "jobmanager:jobmanager"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager        
