@@ -24,7 +24,10 @@ services:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
   taskmanager_2:
-    image: flink:latest
+#    image: flink:latest
+    container_name: custom-taskmanager
+    restart: always
+    build: .
     expose:
       - "6121"
       - "6122"
@@ -34,4 +37,4 @@ services:
     links:
       - "jobmanager:jobmanager"
     environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager        
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager       
