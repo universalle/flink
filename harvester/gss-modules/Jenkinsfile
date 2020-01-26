@@ -16,9 +16,9 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'pwd'
                 dir('harvester/gss-modules')
-                sh 'mvn clean package'
+                    {
+                    sh 'mvn clean package'}
             }
             post {
                 success {
