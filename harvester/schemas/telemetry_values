@@ -1,0 +1,34 @@
+geomesa {
+  sfts {
+    telemetry_values = {
+      fields = [
+        { name = time,            type = Timestamp, default = true }
+        { name = pos_point,       type = Point,     default = true, srid = 4326 }
+        { name = asset_id,        type = String,    index = true}
+        { name = family_code,     type = String }
+        { name = _id,             type = Integer }
+        { name = device_id,       type = String }
+        { name = confidential,    type = Boolean }
+        { name = translated_value,type = Double }
+        { name = offset,          type = Double }
+        { name = sampling_period, type = Integer }
+        { name = value_type,      type = String }
+        { name = report_type,     type = String }
+        { name = resolution,      type = Double }
+        { name = parameter_type,  type = String }
+        { name = tech_type,       type = String }
+        { name = is_signed,       type = String }
+        { name = to,              type = String }
+        { name = from,            type = String }
+        { name = decoded_value,   type = String }
+        { name = last,            type = Double }
+        { name = min,             type = Double }
+        { name = max,             type = Double }
+        { name = sum,             type = Double }
+        { name = cnt,             type = Integer }
+        { name = line,            type = Integer }
+      ]
+    }
+  }
+}
+

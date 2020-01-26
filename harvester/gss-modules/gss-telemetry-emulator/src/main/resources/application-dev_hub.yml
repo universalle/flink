@@ -1,0 +1,28 @@
+
+logging.level.com.cnhindustrial.telemetry: INFO
+
+cnh.gss.topic.name: gsseventhub
+
+spring:
+  kafka:
+    # please replace with your value instead of #####
+    bootstrap-servers: #####.servicebus.windows.net:9093
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties.spring.json.trusted.packages: com.cnhindustrial.telemetry.common.model
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        security.protocol: SASL_SSL
+        # please replace with your value instead of #####
+        sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="#####";
+        sasl.mechanism: PLAIN
+        batch.size: 33554432
+        buffer.memory: 33554432
+        linger.ms: 100
+        acks: 0

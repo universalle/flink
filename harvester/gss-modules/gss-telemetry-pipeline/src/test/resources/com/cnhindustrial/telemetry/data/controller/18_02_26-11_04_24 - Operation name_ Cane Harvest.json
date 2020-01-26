@@ -1,0 +1,35 @@
+{
+  "@Id": "c36841da-db98-893c-d4da-77241a7746f4",
+  "Description": "18/02/26-11:04:24 - Operation name: Cane Harvest",
+  "Summary": {
+    "@Id": "064002c3-97c2-4ab5-b329-22ef4df080cc",
+    "Grower": {
+      "@Id": "e48fb24e-c54d-e8e5-948d-48832f6967e4",
+      "Name": "NATE",
+      "Farms": [
+        {
+          "@Id": "ca6a7744-4d68-23af-3ddc-14cc804df9ec",
+          "Description": "WEST FAR",
+          "Fields": [
+            {
+              "@Id": "53e18240-f97c-5973-8f7c-10465b0210ee",
+              "Description": "Test Field",
+              "FieldBoundaries": []
+            }
+          ]
+        }
+      ]
+    },
+    "Persons": [],
+    "EventDate": "2018-02-26T11:04:24",
+    "EventEndDate": "2018-02-26T11:04:56",
+    "Notes": [],
+    "DeviceElements": [],
+    "DeviceElementConfigurations": [],
+    "SummaryData": [],
+    "OperationSummaries": []
+  },
+  "LoggedData": {
+    "OperationDatas": []
+  }
+}
