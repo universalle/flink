@@ -21,9 +21,9 @@ pipeline {
                     sh 'mvn clean package'}
             }
             post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml'
-                }
+                always {
+                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/**/*.xml'
+                    }
             }
         }
     }
