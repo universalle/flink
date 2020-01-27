@@ -1,6 +1,6 @@
 package com.cnhindustrial.telemetry.emulator.rest;
 
-import com.cnhindustrial.telemetry.common.model.InvalidMessageType;
+import com.cnhindustrial.telemetry.common.model.TelemetryValidationRules;
 import com.cnhindustrial.telemetry.common.model.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import static com.cnhindustrial.telemetry.common.model.Constants.*;
 import static com.cnhindustrial.telemetry.common.model.MessageType.*;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 @Component
 @Scope("prototype")
@@ -76,7 +75,7 @@ public class TelemetryMessageProducer implements Runnable {
     }
 
     private String produceTelemetryRecords(Map<String, Object> inputParams) {
-        List<String> telemetryList = Arrays.stream(familyCodes)
+        List<String> telemetryList = Arrays.stream(FAMILY_CODES)
                 .map(code -> {
                     inputParams.put("familyCode", code);
                     return produce(TELEMETRY_RECORD, inputParams);
@@ -87,15 +86,15 @@ public class TelemetryMessageProducer implements Runnable {
     }
 
     private String getAssetId() {
-        return assetIds[random.nextInt(assetIds.length)];
+        return ASSET_IDS[random.nextInt(ASSET_IDS.length)];
     }
 
     private double getLongitude() {
-        return minLongitude + random.nextDouble() * (maxLongitude - minLongitude);
+        return MIN_LONGITUDE + random.nextDouble() * (MAX_LONGITUDE - MIN_LONGITUDE);
     }
 
     private double getLatitude() {
-        return minLatitude + random.nextDouble() * (maxLatitude - minLatitude);
+        return MIN_LATITUDE + random.nextDouble() * (MAX_LATITUDE - MIN_LATITUDE);
     }
 
     private String getTime() {
@@ -103,18 +102,24 @@ public class TelemetryMessageProducer implements Runnable {
     }
 
     private void setInvalidParam(Map<String, Object> inputParams) {
-        switch (InvalidMessageType.values()[random.nextInt(InvalidMessageType.values().length)]) {
+        switch (TelemetryValidationRules.values()[random.nextInt(TelemetryValidationRules.values().length)]) {
             case TIMESTAMP_AFTER:
                 inputParams.put("time", LocalDateTime.now().plusMonths(1).format(DATE_TIME_FORMATTER));
                 break;
             case TIMESTAMP_BEFORE:
                 inputParams.put("time", LocalDateTime.now().minusYears(25).format(DATE_TIME_FORMATTER));
                 break;
-            case INVALID_LATITUDE:
-                inputParams.put("lat", -1);
+            case LATITUDE_LESS_THAN_MIN:
+                inputParams.put("lat", MIN_LATITUDE - 1);
                 break;
-            case INVALID_LONGITUDE:
-                inputParams.put("lon", -1);
+            case LATITUDE_BIGGER_THAN_MAX:
+                inputParams.put("lat", MAX_LATITUDE + 1);
+                break;
+            case LONGITUDE_LESS_THAN_MIN:
+                inputParams.put("lon", MIN_LONGITUDE - 1);
+                break;
+            case LONGITUDE_BIGGER_THAN_MAX:
+                inputParams.put("lon", MAX_LONGITUDE + 1);
                 break;
             case INVALID_VEHICLE_ID:
                 inputParams.put("assetId", "INVALID_ASSET_ID");

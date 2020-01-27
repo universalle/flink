@@ -1,6 +1,6 @@
 package com.cnhindustrial.telemetry.common.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 

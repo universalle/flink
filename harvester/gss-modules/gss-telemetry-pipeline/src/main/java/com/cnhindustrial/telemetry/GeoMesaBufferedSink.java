@@ -62,7 +62,7 @@ public class GeoMesaBufferedSink extends RichSinkFunction<TelemetryFeatureWrappe
     //How messages is stored in batch,
     //Mind that each parallel execution
     //has it own batch with this THRESHOLD
-    private static final int GENERAL_THRESHOLD = 100;
+    private static final int GENERAL_THRESHOLD = 100_000;
 
     private int thresholdPerParallelSubtag;
 
@@ -118,17 +118,16 @@ public class GeoMesaBufferedSink extends RichSinkFunction<TelemetryFeatureWrappe
         Map<String, String> globalJobConfiguration = getRuntimeContext().getExecutionConfig().getGlobalJobParameters().toMap();
         Map<String, String> allParameters = new HashMap<>(globalJobConfiguration);
 
-        String cassandraContactPoint = allParameters.getOrDefault("cassandra.contact.point", "127.0.0.1:9042");
+        String cassandraContactPoint = allParameters.getOrDefault("cassandra.contact.point", "10.0.0.13:9042");
         String cassandraKeyspace = allParameters.getOrDefault("cassandra.keyspace", "mykeyspace");
         String cassandraCatalog = allParameters.getOrDefault("cassandra.catalog", "telemetry");
 
         allParameters.put("cassandra.contact.point", cassandraContactPoint);
         allParameters.put("cassandra.keyspace", cassandraKeyspace);
         allParameters.put("cassandra.catalog", cassandraCatalog);
-        allParameters.put("geomesa.batchwriter.maxthreads", "10");
-        allParameters.put("geomesa.batchwriter.latency.millis", "60000");
-        allParameters.put("geomesa.batchwriter.memory", "52428800");
-        allParameters.put("geomesa.batchwriter.timeout.millis", "600000");
+        allParameters.put("geomesa.query.threads", "10");
+        allParameters.put("geomesa.query.timeout", "10 minutes");
+        allParameters.put("geomesa.query.caching", "true");
 
         //Geomesa Data Store used for getting GeoMesaFeatureStore
         DataStore datastore = dataStoreFactory.apply(allParameters);

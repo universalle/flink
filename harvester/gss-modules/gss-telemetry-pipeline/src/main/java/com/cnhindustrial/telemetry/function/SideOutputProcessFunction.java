@@ -8,7 +8,7 @@ import org.apache.flink.util.OutputTag;
 
 import java.util.function.Function;
 
-public class SideOutputProcessFunction<T, S> extends ProcessFunction<T, S> implements ResultTypeQueryable {
+public class SideOutputProcessFunction<T, S> extends ProcessFunction<T, S> implements ResultTypeQueryable<S> {
 
     private static final long serialVersionUID = -920720845189425766L;
 
@@ -32,7 +32,7 @@ public class SideOutputProcessFunction<T, S> extends ProcessFunction<T, S> imple
     }
 
     @Override
-    public TypeInformation getProducedType() {
+    public TypeInformation<S> getProducedType() {
         return TypeInformation.of(outClass);
     }
 }

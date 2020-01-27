@@ -9,6 +9,8 @@ import de.javakaffee.kryoserializers.UnmodifiableCollectionsSerializer;
 
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.sink.DiscardingSink;
+import org.apache.flink.streaming.api.functions.sink.PrintSinkFunction;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,12 +66,13 @@ class IngestPipelineTest {
         IngestPipeline ingestPipeline = new IngestPipeline(
                 telemetrySource,
                 functionFactory.getControllerDataSource(see),
-                machineDataCollectSink,
-                null);
+                new DiscardingSink<>(),
+                new PrintSinkFunction<>(),
+                machineDataCollectSink);
 
         ingestPipeline.build(see);
         ingestPipeline.execute(see);
 
-        assertThat(machineDataCollectSink.getValues().size(), Matchers.is(12));
+        assertThat(machineDataCollectSink.getValues().size(), Matchers.is(2));
     }
 }

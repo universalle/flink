@@ -1,14 +1,11 @@
-
 package com.cnhindustrial.telemetry.common.model;
-
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Duty implements Serializable {
