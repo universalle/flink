@@ -31,7 +31,7 @@ pipeline {
             steps{
                 dir('harvester/gss-modules/gss-telemetry-pipeline/target')
                 {
-                sh 'curl -X POST -H "Expect:" -F "jarfile=@gss-telemetry-pipeline-1.0-SNAPSHOT-jar-with-dependencies.jar" http://13.82.175.57:8085/jars/upload'
+                sh 'curl -X POST -H "Expect:" -F "jarfile=@gss-telemetry-pipeline-1.0-SNAPSHOT-jar-with-dependencies.jar" http://13.86.61.207:8081/jars/upload'
                 }
             }
         }
