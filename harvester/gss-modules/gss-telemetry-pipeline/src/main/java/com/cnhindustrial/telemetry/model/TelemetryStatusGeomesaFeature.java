@@ -11,8 +11,6 @@ import java.io.Serializable;
 
 public class TelemetryStatusGeomesaFeature extends SimpleFeatureImpl implements Serializable {
 
-    private static final long serialVersionUID = 546199776991042425L;
-
     private static FilterFactory2 FILTER_FACTORY = CommonFactoryFinder.getFilterFactory2(null);
     private static final boolean DEFAULT_VALIDATION_STATE = false;
 

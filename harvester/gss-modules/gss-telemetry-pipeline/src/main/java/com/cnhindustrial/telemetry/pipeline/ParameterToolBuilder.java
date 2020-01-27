@@ -16,7 +16,6 @@ public class ParameterToolBuilder {
 
     static {
         DICTIONARY.put("event.hub.telemetry.endpoint", "EVENT_HUB_TELEMETRY_ENDPOINT");
-        DICTIONARY.put("event.hub.dead.letter.endpoint", "EVENT_HUB_DEAD_LETTER_ENDPOINT");
         DICTIONARY.put("blob.storage.controller.data.path", "BLOB_STORAGE_CONTROLLER_DATA_PATH");
         DICTIONARY.put("blob.storage.controller.data.interval.ms", "BLOB_STORAGE_CONTROLLER_DATA_INTERVAL");
         DICTIONARY.put("cassandra.contact.point", "CASSANDRA_CONTACT_POINT");

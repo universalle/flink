@@ -3,13 +3,10 @@ package com.cnhindustrial.telemetry.pipeline;
 import com.cnhindustrial.telemetry.common.exception.EnvironmentConfigurationException;
 import com.cnhindustrial.telemetry.common.json.ByteArrayDeserializationSchema;
 
-import com.cnhindustrial.telemetry.converter.TelemetrySerializationSchema;
-import com.cnhindustrial.telemetry.common.model.TelemetryDto;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
-import org.apache.flink.streaming.connectors.kafka.KafkaSerializationSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +34,7 @@ public class KafkaConnector {
         LOGGER.info("Creating Kafka Consumer. Reading from last committed.");
 
         properties.setProperty("group.id", UUID.randomUUID().toString());
+        properties.setProperty("socket.receive.buffer.bytes", "32000000");
         properties.setProperty("receive.buffer.bytes", "32000000");
         properties.setProperty("max.poll.records", "1000000");
         properties.setProperty("request.timeout.ms", "60000");
@@ -52,28 +50,23 @@ public class KafkaConnector {
         return kafkaSource(new ByteArrayDeserializationSchema());
     }
 
-    private <T> FlinkKafkaProducer<T> kafkaSink(KafkaSerializationSchema<T> deserializationSchema) {
-        LOGGER.info("Creating Kafka Consumer. Reading from last committed.");
-
-        properties.setProperty("group.id", UUID.randomUUID().toString());
-        properties.setProperty("batch.size", "33554432");
-        properties.setProperty("buffer.memory", "33554432");
-        properties.setProperty("linger.ms", "100");
-        properties.setProperty("acks", "0");
-        properties.setProperty("request.timeout.ms", "60000");
-        properties.setProperty("auto.offset.reset", "latest");
-
-        return new FlinkKafkaProducer<T>(
-                topic,
-                deserializationSchema,
-                properties,
-                FlinkKafkaProducer.Semantic.AT_LEAST_ONCE
-        );
-    }
-
-    public FlinkKafkaProducer<TelemetryDto> deadLetterQueueSink() {
-        return kafkaSink(new TelemetrySerializationSchema(topic));
-    }
+//    private <T> FlinkKafkaProducer<T> kafkaSink(SerializationSchema<T> deserializationSchema) {
+//        LOGGER.info("Creating Kafka Consumer. Reading from last committed.");
+//
+//        properties.setProperty("group.id", UUID.randomUUID().toString());
+//        properties.setProperty("batch.size", "33554432");
+//            properties.setProperty("buffer.memory", "33554432");
+//            properties.setProperty("linger.ms", "100");
+//            properties.setProperty("acks", "0");
+//        properties.setProperty("request.timeout.ms", "60000");
+//        properties.setProperty("auto.offset.reset", "latest");
+//
+//        return new FlinkKafkaProducer<T>(
+//                topic,
+//                deserializationSchema,
+//                properties,
+//                Semantic.AT_LEAST_ONCE);
+//    }
 
     public static class Builder {
 

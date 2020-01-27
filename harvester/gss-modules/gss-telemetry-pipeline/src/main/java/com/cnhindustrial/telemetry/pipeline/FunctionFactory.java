@@ -9,6 +9,7 @@ import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.sink.PrintSinkFunction;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 import org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction;
 import org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator;
@@ -93,22 +94,8 @@ class FunctionFactory {
 
     SinkFunction<TelemetryDto> getDeadLetterSink() {
         LOGGER.info("Building Dead Letter Queue sink function.");
-        if (parameters.has("event.hub.dead.letter.endpoint")) {
-            LOGGER.info("Building Dead Letter sink function connected to Azure Event Hub.");
-
-            String connectionString = parameters.get("event.hub.dead.letter.endpoint");
-            LOGGER.debug("Azure Event Hub connection string: {}.", connectionString);
-
-            return new KafkaConnector.Builder()
-                    .buildEventHubConnector(connectionString)
-                    .deadLetterQueueSink();
-        } else {
-            LOGGER.info("Building Dead Letter source function connected to local Kafka.");
-
-            return new KafkaConnector.Builder()
-                    .buildKafkaConnector("dead_letter", "localhost:29092")
-                    .deadLetterQueueSink();
-        }
+        // TODO add real implementation
+        return new PrintSinkFunction<>();
     }
 
     SinkFunction<TelemetryFeatureWrapper> getMachineDataSink() {

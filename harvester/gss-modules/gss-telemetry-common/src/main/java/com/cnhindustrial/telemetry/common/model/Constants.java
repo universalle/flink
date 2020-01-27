@@ -2,18 +2,18 @@ package com.cnhindustrial.telemetry.common.model;
 
 import java.time.format.DateTimeFormatter;
 
-import static com.cnhindustrial.telemetry.common.json.ObjectMapperHelper.ZULU_TIME_FORMAT;
+import static com.cnhindustrial.telemetry.common.json.BaseDeserializationSchema.ZULU_TIME_FORMAT;
 
 public class Constants {
-    public static final double MIN_LATITUDE = 37.018523;
-    public static final double MAX_LATITUDE = 40.988993;
+    public static final double minLatitude = 37.018523;
+    public static final double maxLatitude = 40.988993;
 
-    public static final double MIN_LONGITUDE = -109.047986;
-    public static final double MAX_LONGITUDE = -102.071867;
+    public static final double minLongitude = -102.071867;
+    public static final double maxLongitude = -109.047986;
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(ZULU_TIME_FORMAT);
 
-    public static final String[] ASSET_IDS = {
+    public static final String[] assetIds = {
             "XUZT8AVMSRTXFW5QQ",
             "II93I7PKMJQC0PJKB",
             "TIY5SZV4KVG2A6YVG",
@@ -46,7 +46,7 @@ public class Constants {
             "QVB1KIGGE4OS073ES"
     };
 
-    public static final String[] FAMILY_CODES = {
+    public static final String[] familyCodes = {
             "AVG_FUEL_DISTANCE",
             "AREA",
             "AREA_REMAIN",
