@@ -18,7 +18,7 @@ pipeline {
             steps {
                 dir('harvester/gss-modules')
                     {
-                    sh 'mvn clean package'
+                    sh 'mvn -B clean package'
                     }
             }
             post {
@@ -31,7 +31,7 @@ pipeline {
             steps{
                 dir('harvester/gss-modules/gss-telemetry-emulator/target')
                 {
-                sh 'curl --header "Content-Type: application/x-java-archive" -X POST -H "Expect:" -F "jarfile=@gss-telemetry-emulator-1.0-SNAPSHOT.jar" http://13.82.175.57:8085/jars/upload'
+                sh 'curl -X POST -H "Expect:" -F "jarfile=@gss-telemetry-emulator-1.0-SNAPSHOT.jar" http://13.82.175.57:8085/jars/upload'
                 }
             }
         }
