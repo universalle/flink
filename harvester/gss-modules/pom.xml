@@ -24,7 +24,7 @@
 
         <flink.version>1.9.1</flink.version>
         <flink-shaded-jackson.version>2.9.8-7.0</flink-shaded-jackson.version>
-        <jackson.databind.version>2.10.1</jackson.databind.version>
+        <jackson.databind.version>2.10.5.1</jackson.databind.version>
         <scala.binary.version>2.11</scala.binary.version>
         <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
     </properties>
